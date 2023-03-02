@@ -8,6 +8,7 @@ public abstract class Unit<T> extends GameObject implements Interaction<T> {
     protected int health;
     protected int damage;
     protected int speed;
+    protected int maxSpeed;
 
     public Unit() {
         super();

@@ -2,6 +2,7 @@ public class Artifact extends GameObject {
 
     private String name;
     private String rarity;
+    private String eee;
 
     public Artifact() {
         this.name = "Stone with eternity time";
