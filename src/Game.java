@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Game {
     static Human<String> human = new Human<String>("1", "Leonid", 100, 100, 10);
     static Surface surface = new Surface();
-    static Artifact artifact = new Artifact("Hello", "111", 60, 60);
+    static Artifact artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()), Math.round(Math.random() * surface.getY()));
 
     public static void startMenu() {
         clearScreen();
@@ -85,29 +85,29 @@ public class Game {
         }
     }
 
-    public static void refreshHealth(Human<String> human2) {
+    public static void refreshHealth(Human<String> human) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("\nВведите кол-во здоровья: ");
             int health = scanner.nextInt();
-            human2.setHealth(health);
+            human.setHealth(health);
             startMenu();
         }
     }
 
-    public static void refreshDamage(Human<String> human2) {
+    public static void refreshDamage(Human<String> human) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("\nВведите кол-во урона: ");
             int damage = scanner.nextInt();
-            human2.setDamage(damage);
+            human.setDamage(damage);
             startMenu();
         }
     }
 
-    public static void refreshSpeed(Human<String> human2) {
+    public static void refreshSpeed(Human<String> human) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.print("\nВведите значение скорости передвижения: ");
             int speed = scanner.nextInt();
-            human2.setSpeed(speed);
+            human.setSpeed(speed);
             startMenu();
         }
     }
@@ -173,6 +173,8 @@ public class Game {
         if((human.getX() == artifact.getX()) && (human.getY() == artifact.getY())) { 
             human.pickUpArtifact();
             System.out.println("\t\t\t\tАртефакт подобран! \n\t\t\t\tНазвание артефакта: " + artifact.getName() + "\n\t\t\t\tРедкость артефакта: " + artifact.getRarity());
+            artifact = null;
+            artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()), Math.round(Math.random() * surface.getY()));
         }
         try (Scanner scanner = new Scanner(System.in)) {
             String movement = scanner.nextLine();

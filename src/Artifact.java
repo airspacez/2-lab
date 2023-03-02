@@ -1,10 +1,7 @@
-import java.util.Random;
-
 public class Artifact extends GameObject {
 
     private String name;
     private String rarity;
-    Random r = new Random();
 
     public Artifact() {
         this.name = "Stone with eternity time";
@@ -27,7 +24,7 @@ public class Artifact extends GameObject {
         this.y = 5;
     }
 
-    public Artifact(String name, String rarity, int x, int y) {
+    public Artifact(String name, String rarity, double x, double y) {
         this.name = name;
         this.rarity = rarity;
         this.x = x;
