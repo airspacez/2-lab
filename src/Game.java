@@ -3,7 +3,8 @@ import java.util.Scanner;
 public class Game {
     static Human<String> human = new Human<String>("1", "Leonid", 100, 100, 10);
     static Surface surface = new Surface();
-    static Artifact artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()), Math.round(Math.random() * surface.getY()));
+    static Artifact artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()),
+            Math.round(Math.random() * surface.getY()));
 
     public static void startMenu() {
         clearScreen();
@@ -26,7 +27,7 @@ public class Game {
                     editArtifact();
                     break;
                 case 4:
-                    startGame();
+                    renderGame();
                     break;
                 default:
                     System.out.println("Досвидания!");
@@ -143,57 +144,40 @@ public class Game {
         }
     }
 
-    public static void startGame() {
-        clearScreen();
-        if(human.getX() <= 0) {
-            System.out.println("Конец карты!!!");
+    public static void update() {
+        if (human.getX() <= 0) {
             human.setX(0);
         }
 
-        if(human.getY() > surface.getY()) {
-            System.out.println("Конец карты!!!");
+        if (human.getY() > surface.getY()) {
             human.setY(surface.getY());
         }
 
-        if(human.getY() <= 0) {
-            System.out.println("Конец карты!!!");
+        if (human.getY() <= 0) {
             human.setY(0);
         }
 
-        if(human.getX() > surface.getX()) {
-            System.out.println("Конец карты!!!");
+        if (human.getX() > surface.getX()) {
             human.setX(surface.getX());
-        }
-        System.out.println("РАЗМЕР КАРТЫ: " + surface.getX() + " на " + surface.getY()
-                + "\tАртефакт находится по координатам: " + artifact.getX() + ", " + artifact.getY() + "\n");
-        System.out.println("Доступные команды: left, right, up, down, q, quit");
-        System.out.println("\nТекущие координаты " + human.getName() + ":");
-        System.out.println("x: " + human.getX());
-        System.out.println("y: " + human.getY());
-        if((human.getX() == artifact.getX()) && (human.getY() == artifact.getY())) { 
-            human.pickUpArtifact();
-            System.out.println("\t\t\t\tАртефакт подобран! \n\t\t\t\tНазвание артефакта: " + artifact.getName() + "\n\t\t\t\tРедкость артефакта: " + artifact.getRarity());
-            artifact = null;
-            artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()), Math.round(Math.random() * surface.getY()));
         }
         try (Scanner scanner = new Scanner(System.in)) {
             String movement = scanner.nextLine();
             switch (movement) {
                 case "up":
                     human.MoveUp();
-                    startGame();
+                    renderGame();
                     break;
                 case "down":
                     human.MoveDown();
-                    startGame();
+                    renderGame();
                     break;
                 case "left":
                     human.MoveLeft();
-                    startGame();
+                    renderGame();
                     break;
                 case "right":
                     human.MoveRight();
-                    startGame();
+                    renderGame();
                     break;
                 case "q":
                 case "quit":
@@ -204,6 +188,25 @@ public class Game {
                     System.exit(0);
             }
         }
+        if ((human.getX() == artifact.getX()) && (human.getY() == artifact.getY())) {
+            human.pickUpArtifact();
+            System.out.println("\t\t\t\tАртефакт подобран! \n\t\t\t\tНазвание артефакта: " + artifact.getName()
+                    + "\n\t\t\t\tРедкость артефакта: " + artifact.getRarity());
+            artifact = null;
+            artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()),
+                    Math.round(Math.random() * surface.getY()));
+        }
+    }
+
+    public static void renderGame() {
+        clearScreen();
+        System.out.println("РАЗМЕР КАРТЫ: " + surface.getX() + " на " + surface.getY()
+                + "\tАртефакт находится по координатам: " + artifact.getX() + ", " + artifact.getY() + "\n");
+        System.out.println("Доступные команды: left, right, up, down, q, quit");
+        System.out.println("\nТекущие координаты " + human.getName() + ":");
+        System.out.println("x: " + human.getX());
+        System.out.println("y: " + human.getY());
+        update();
     }
 
     public static void clearScreen() {
@@ -214,5 +217,4 @@ public class Game {
     public static void main(String[] args) {
         Game.startMenu();
     }
-
 }
