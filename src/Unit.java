@@ -1,10 +1,7 @@
 public abstract class Unit<T> extends GameObject implements Interaction<T> {
 
     private T id;
-    // Имя юнита
     private String name;
-
-    // Характеристики юнита
     protected int health;
     protected int damage;
     protected int speed;

@@ -1,12 +1,12 @@
 import java.util.Scanner;
 
 public class Game {
-    static Human<String> human = new Human<String>("1", "Leonid", 100, 100, 10);
+    static Human<String> human = new Human<String>("1", "Leonid", 100, 100, 1);
     static Surface surface = new Surface();
-    static Artifact artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()),
-            Math.round(Math.random() * surface.getY()));
+    static Artifact artifact = new Artifact((int) Math.round(Math.random() * surface.getX()),
+            (int) Math.round(Math.random() * surface.getY()));
 
-    public static void startMenu() {
+    public static void openMenu() {
         clearScreen();
         System.out.print("\n\t\t\t\t\tВыберите опцию: ");
         System.out.print("\n1. Изменить характеристики персонажа ");
@@ -29,6 +29,9 @@ public class Game {
                 case 4:
                     renderGame();
                     break;
+                case 0:
+                    System.out.println("Досвидания!");
+                    System.exit(0);
                 default:
                     System.out.println("Досвидания!");
                     System.exit(0);
@@ -66,7 +69,7 @@ public class Game {
                     refreshSpeed(human);
                     break;
                 case 5:
-                    startMenu();
+                    openMenu();
                     break;
                 default:
                     System.out.println("Досвидания!");
@@ -82,7 +85,7 @@ public class Game {
             System.out.print("\nВведите имя: ");
             String name = scanner.nextLine();
             human.setName(name);
-            startMenu();
+            openMenu();
         }
     }
 
@@ -91,7 +94,7 @@ public class Game {
             System.out.print("\nВведите кол-во здоровья: ");
             int health = scanner.nextInt();
             human.setHealth(health);
-            startMenu();
+            openMenu();
         }
     }
 
@@ -100,7 +103,7 @@ public class Game {
             System.out.print("\nВведите кол-во урона: ");
             int damage = scanner.nextInt();
             human.setDamage(damage);
-            startMenu();
+            openMenu();
         }
     }
 
@@ -109,7 +112,7 @@ public class Game {
             System.out.print("\nВведите значение скорости передвижения: ");
             int speed = scanner.nextInt();
             human.setSpeed(speed);
-            startMenu();
+            openMenu();
         }
     }
 
@@ -124,7 +127,7 @@ public class Game {
             int editedY = scanner.nextInt();
             surface.setX(editedX);
             surface.setY(editedY);
-            startMenu();
+            openMenu();
         }
     }
 
@@ -140,11 +143,11 @@ public class Game {
             String rarity = scanner.nextLine();
             artifact.setName(name);
             artifact.setRarity(rarity);
-            startMenu();
+            openMenu();
         }
     }
 
-    public static void update() {
+    public static void checkColision() {
         if (human.getX() <= 0) {
             human.setX(0);
         }
@@ -160,41 +163,52 @@ public class Game {
         if (human.getX() > surface.getX()) {
             human.setX(surface.getX());
         }
+    }
+
+    public static void update() {
+        if ((human.getX() == artifact.getX()) && (human.getY() == artifact.getY())) {
+            human.pickUpArtifact();
+            System.out.println("\t\t\t\t     Артефакт подобран! \n\t\t\t\tНазвание артефакта: " + artifact.getName()
+                    + "\n\t\t\t\tРедкость артефакта: " + artifact.getRarity());
+            artifact = null;
+            artifact = new Artifact((int) Math.round(Math.random() * surface.getX()),
+                    (int) Math.round(Math.random() * surface.getY()));
+        }
         try (Scanner scanner = new Scanner(System.in)) {
             String movement = scanner.nextLine();
             switch (movement) {
                 case "up":
                     human.MoveUp();
+                    checkColision();
                     renderGame();
+                    update();
                     break;
                 case "down":
                     human.MoveDown();
+                    checkColision();
                     renderGame();
+                    update();
                     break;
                 case "left":
                     human.MoveLeft();
+                    checkColision();
                     renderGame();
+                    update();
                     break;
                 case "right":
                     human.MoveRight();
+                    checkColision();
                     renderGame();
+                    update();
                     break;
                 case "q":
                 case "quit":
-                    startMenu();
+                    openMenu();
                     break;
                 default:
                     System.out.println("Досвидания!");
                     System.exit(0);
             }
-        }
-        if ((human.getX() == artifact.getX()) && (human.getY() == artifact.getY())) {
-            human.pickUpArtifact();
-            System.out.println("\t\t\t\tАртефакт подобран! \n\t\t\t\tНазвание артефакта: " + artifact.getName()
-                    + "\n\t\t\t\tРедкость артефакта: " + artifact.getRarity());
-            artifact = null;
-            artifact = new Artifact("Hello", "111", Math.round(Math.random() * surface.getX()),
-                    Math.round(Math.random() * surface.getY()));
         }
     }
 
@@ -215,6 +229,6 @@ public class Game {
     }
 
     public static void main(String[] args) {
-        Game.startMenu();
+        Game.openMenu();
     }
 }

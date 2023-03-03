@@ -1,30 +1,31 @@
 public abstract class GameObject {
-    protected double x;
-    protected double y;
+
+    protected int x;
+    protected int y;
 
     public GameObject() {
-        this.x = 50;
-        this.y = 50;
+        this.x = 0;
+        this.y = 0;
     }
 
-    public GameObject(double x, double y) {
+    public GameObject(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-    public void setX(double x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public double getX() {
+    public int getX() {
         return x;
     }
 
-    public void setY(double y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public double getY() {
+    public int getY() {
         return y;
     }
 }

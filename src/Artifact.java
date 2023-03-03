@@ -4,27 +4,34 @@ public class Artifact extends GameObject {
     private String rarity;
 
     public Artifact() {
-        this.name = "Stone with eternity time";
-        this.rarity = "Rare";
-        this.x = 5;
-        this.y = 5;
+        name = "stone";
+        rarity = "normal";
+        x = 5;
+        y = 5;
     }
 
     public Artifact(String name) {
         this.name = name;
-        this.rarity = "Rare";
-        this.x = 5;
-        this.y = 5;
+        rarity = "normal";
+        x = 5;
+        y = 5;
     }
 
     public Artifact(String name, String rarity) {
         this.name = name;
         this.rarity = rarity;
-        this.x = 5;
-        this.y = 5;
+        x = 5;
+        y = 5;
     }
 
-    public Artifact(String name, String rarity, double x, double y) {
+    public Artifact(int x, int y) {
+        name = "stone";
+        rarity = "normal";
+        this.x = x;
+        this.y = y;
+    }
+
+    public Artifact(String name, String rarity, int x, int y) {
         this.name = name;
         this.rarity = rarity;
         this.x = x;
