@@ -1,4 +1,4 @@
-public abstract class Unit<T> extends GameObject implements Interaction<T> {
+public abstract class Unit<T> extends GameObject {
 
     private T id;
     private String name;
@@ -15,6 +15,14 @@ public abstract class Unit<T> extends GameObject implements Interaction<T> {
         speed = 1;
     }
 
+    public Unit(T id) {
+        super();
+        this.id = id;
+        health = 10;
+        damage = 0;
+        speed = 1;
+    }
+
     public Unit(T id, String name, int health, int damage, int speed) {
         this.id = id;
         this.name = name;
@@ -25,6 +33,10 @@ public abstract class Unit<T> extends GameObject implements Interaction<T> {
 
     public T getId() {
         return id;
+    }
+
+    public void setId(T id) {
+        this.id = id;
     }
 
     public String getName() {

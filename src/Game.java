@@ -1,7 +1,16 @@
 import java.util.Scanner;
 
+/*SOLID 
+S - Single responsibility principle - Сделано (разделенно)
+O - Open closed principle - Сделано (интерфейсы)
+L - Liskov substitution Principle - Сделано (Zombie и Human (право подбора артефакта))
+I - Interface Segregation Principle - Сделано (Создан еще один интерфейс - PickUpAtrifacts)
+D - Dependency Inversion Principle - Сдеално (Human имеет возможность ходить двойным шагом)
+*/
+
 public class Game {
     static Human<String> human = new Human<String>("1", "Leonid", 100, 100, 1);
+    static Zombie<String> zombie = new Zombie<String>("2"); // не в действии
     static Surface surface = new Surface();
     static Artifact artifact = new Artifact((int) Math.round(Math.random() * surface.getX()),
             (int) Math.round(Math.random() * surface.getY()));
@@ -197,6 +206,30 @@ public class Game {
                     break;
                 case "right":
                     human.MoveRight();
+                    checkColision();
+                    renderGame();
+                    update();
+                    break;
+                case "up double":
+                    human.DoubleMoveUp();
+                    checkColision();
+                    renderGame();
+                    update();
+                    break;
+                case "down double":
+                    human.DoubleMoveDown();
+                    checkColision();
+                    renderGame();
+                    update();
+                    break;
+                case "left double":
+                    human.DoubleMoveLeft();
+                    checkColision();
+                    renderGame();
+                    update();
+                    break;
+                case "right double":
+                    human.DoubleMoveRight();
                     checkColision();
                     renderGame();
                     update();
